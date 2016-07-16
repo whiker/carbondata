@@ -220,6 +220,7 @@ class CarbonQueryRDD[V: ClassTag](
         }
         if (finished) {
           clearDictionaryCache(queryModel.getColumnToDictionaryMapping)
+          queryModel.getStatisticsRecorder.logStatistics();
         }
         !finished
       }
@@ -242,10 +243,6 @@ class CarbonQueryRDD[V: ClassTag](
             .clearColumnDictionaryCache(columnToDictionaryMap)
         }
       }
-
-      logInfo("*************************** Total Time Taken to execute the query in Carbon Side: " +
-        (System.currentTimeMillis - queryStartTime)
-      )
     }
     iter
   }
